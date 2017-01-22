@@ -138,7 +138,7 @@ RUN pecl install redis && \
     echo "extension=redis.so" >>$PHP_INI_DIR/conf.d/redis.ini
 #安装vim
 RUN apt-get install vim -y
-ADD ./conf/.vimrc ~/.vimrc
+ADD ./conf/.vimrc /root/.vimrc
 #设置web 根目录并copy源代码
 RUN mkdir -p $WWW_ROOT
 ADD ./www/* $WWW_ROOT
