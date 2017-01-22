@@ -5,7 +5,7 @@ ENV SOFTWARE_TEMP_DIR /SOFTWARE_TEMP_DIR
 ENV WWW_ROOT /data/www/
 #用bash替代sh
 RUN rm /bin/sh &&  ln -s /bin/bash /bin/sh
-#设置时区为北京时区
+#设置时区
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #替换源镜像地址
 RUN sed -i "s/archive.ubuntu.com/cn.archive.ubuntu.com/g" /etc/apt/sources.list
@@ -33,7 +33,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 ENV PHPIZE_DEPS \
 		autoconf \
 		file \
-        #编译用包 有了它 gcc g++ make等都安装了
+    #编译用包 有了它 gcc g++ make等都安装了
 		build-essential \
 		libc-dev \
         libcurl4-openssl-dev \
@@ -117,7 +117,7 @@ RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" $
     sed -i -e "s/;listen.group = nobody/listen.group = nginx/g" ${www_conf} && \
     sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" ${www_conf} &&\
     sed -i -e "s/^;clear_env = no$/clear_env = no/" ${www_conf}
-    
+
 #安装libmemcached
 WORKDIR $SOFTWARE_TEMP_DIR/libmemcached-1.0.18
 RUN ./configure --prefix=/usr/local/libmemcached && \
@@ -138,6 +138,7 @@ RUN pecl install redis && \
     echo "extension=redis.so" >>$PHP_INI_DIR/conf.d/redis.ini
 #安装vim
 RUN apt-get install vim -y
+ADD ./conf/.vimrc ~/.vimrc
 #设置web 根目录并copy源代码
 RUN mkdir -p $WWW_ROOT
 ADD ./www/* $WWW_ROOT
