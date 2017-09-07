@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER javed<i@javed.cn>
-ENV NGINX_VERSION 1.10.2-1~trusty
+ENV NGINX_VERSION 1.12.1-1~trusty
 ENV SOFTWARE_TEMP_DIR /SOFTWARE_TEMP_DIR
 ENV WWW_ROOT /data/www/
 #用bash替代sh
@@ -12,8 +12,8 @@ RUN sed -i "s/archive.ubuntu.com/cn.archive.ubuntu.com/g" /etc/apt/sources.list
 #安装NGINX
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
 	&& echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" >> /etc/apt/sources.list \
-	&& apt-get update \
-	&& apt-get install --no-install-recommends --no-install-suggests -y \
+	&& apt-get update
+RUN apt-get install --no-install-recommends --no-install-suggests -y \
 						ca-certificates \
 						nginx=${NGINX_VERSION} \
 						nginx-module-xslt \
