@@ -113,6 +113,7 @@ RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" $
     sed -i -e "s/user = nobody/user = nginx/g" ${www_conf} && \
     sed -i -e "s/group = nobody/group = nginx/g" ${www_conf} && \
     sed -i -e "s/;listen.mode = 0660/listen.mode = 0660/g" ${www_conf} && \
+		sed -i -e "s/;listen.backlog = 511/listen.backlog = 4096/g" ${www_conf} && \
     sed -i -e "s/;listen.owner = nobody/listen.owner = nginx/g" ${www_conf} && \
     sed -i -e "s/;listen.group = nobody/listen.group = nginx/g" ${www_conf} && \
     sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" ${www_conf} &&\
